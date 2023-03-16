@@ -10,6 +10,7 @@ import (
 
 	"github.com/gopheramit/pScan/scan"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // listCmd represents the list command
@@ -18,11 +19,9 @@ var listCmd = &cobra.Command{
 	Use:     "list",
 	Short:   "List hosts in hosts list",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		hostFiles, err := cmd.Flags().GetString("hosts-file")
-		if err != nil {
-			return err
-		}
-		return listAction(os.Stdout, hostFiles, args)
+
+		hostsFiles := viper.GetString("host-files")
+		return listAction(os.Stdout, hostsFiles, args)
 	},
 }
 

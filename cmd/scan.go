@@ -10,6 +10,7 @@ import (
 
 	"github.com/gopheramit/pScan/scan"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // scanCmd represents the scan command
@@ -18,16 +19,13 @@ var scanCmd = &cobra.Command{
 	Short: "Run a short scan on the hosts",
 
 	RunE: func(cmd *cobra.Command, args []string) error {
-		hostFile, err := cmd.Flags().GetString("host-file")
-		if err != nil {
-			return err
-		}
+		hostsFiles := viper.GetString("host-files")
 		ports, err := cmd.Flags().GetIntSlice("ports")
 		if err != nil {
 			return err
 
 		}
-		return scanAction(os.Stdout, hostFile, ports)
+		return scanAction(os.Stdout, hostsFiles, ports)
 
 	},
 }
